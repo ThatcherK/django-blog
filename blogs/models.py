@@ -9,6 +9,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=200)
     body = models.CharField(max_length=400)
     picture = models.ImageField(blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_date = models.DateTimeField( default=timezone.now)
 
     def __str__(self):

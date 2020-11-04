@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, BlogForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
+from .models import Blog
 
 def index(request):
     username = None
@@ -12,12 +13,29 @@ def index(request):
     return render(request,'blogs/home.html',{'username': username})
 
 def blog_page(request):
-    return render(request, 'blogs/create_blog.html', context=None)
+    form =BlogForm()
+    return render(request, 'blogs/create_blog.html', {"form": form})
 
+def create_blog(request):
+    if request.method == 'POST':
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data.get('title')
+            body = form.cleaned_data.get('body')
+            picture = form.cleaned_data.get('picture')
+            if picture is not None:
+                blog = Blog(title=title, body=body, picture=picture)
+                blog.save()
+            else:
+                blog = Blog(title=title, body=body)
+                blog.save() 
+            return redirect(reverse('index'))
+        else:
+            form = BlogForm()
 def signup_form(request):
     form = SignupForm()
     return render(request, 'blogs/signup.html', context={'form': form})
-
+  
 def user_signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -56,3 +74,4 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return render(request,'blogs/home.html',context=None)
+

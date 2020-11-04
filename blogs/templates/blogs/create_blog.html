@@ -1,7 +1,10 @@
 {% extends "blogs/base.html" %}
 
-{% block title %}My amazing blog{% endblock %}
-
 {% block content %}
-<h1>we are here</h1>
+<form action="{% url 'create_blog' %}" method="post">
+    {% csrf_token %}
+    {{form}}
+    <input  type="submit" value="Submit">
+</form>
+
 {% endblock %}
