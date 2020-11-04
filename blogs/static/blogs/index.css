@@ -1,10 +1,10 @@
 .navbarContainer{
     display: flex;
     justify-content: space-between;
-    background: whitesmoke;
+    background: rgb(131, 54, 54);
     width: 100vw;
 }
-.navbarContainer h3{
+.navbarContainer h2{
     padding: 20px;
 }
 .navbar{
@@ -18,7 +18,8 @@
     padding: 10px;
     margin: 10px;
     text-decoration: none;
-    color: black;
+    color: white;
+    font-size: 20px;
 }
 .navbar button{
     background-color: rgba(18, 18, 240, 0.596);
