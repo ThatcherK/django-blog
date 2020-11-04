@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'blogs/index.css' %}">
+    <title>{% block title %}My amazing blog system{% endblock %}</title>
+</head>
+
+<body>
+    <div class="navbarContainer">
+        {% block sidebar %}
+        <h3>The ultimate blog</h3>
+        <div class="navbar">
+            <a href="/">Home</a>
+            <a href="/blog/">Blog</a>
+            <button>Sign Up</button>
+            <button>Log In</button>
+            <button>Log Out</button>
+        </div>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

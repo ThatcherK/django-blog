@@ -1,0 +1,31 @@
+.navbarContainer{
+    display: flex;
+    justify-content: space-between;
+    background: whitesmoke;
+    width: 100vw;
+}
+.navbarContainer h3{
+    padding: 20px;
+}
+.navbar{
+    display: flex;
+    /* list-style-type: none; */
+    float: right;
+    padding: 20px;
+}
+
+.navbar a{
+    padding: 10px;
+    margin: 10px;
+    text-decoration: none;
+    color: black;
+}
+.navbar button{
+    background-color: rgba(18, 18, 240, 0.596);
+    border-radius: 6px;
+    border: none;
+    padding: 10px;
+    margin: 10px;
+    color: white;
+    width: 80px;
+}
