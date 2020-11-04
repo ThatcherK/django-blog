@@ -8,15 +8,17 @@
 
 <body>
     <div class="navbarContainer">
-        {% block sidebar %}
         <h2>The ultimate blog</h2>
         <div class="navbar">
             <a href="/">Home</a>
             <a href="/blog/">Blog</a>
             <a href="/signup_form/">Sign Up</a>
-            <a>Log In</a>
-            <a>Log Out</a>
+            <a href="/login_form/">Log In</a>
+            <a href="/user_logout/">Log Out</a>
         </div>
+    </div>
+    <div id="sidebar">
+        {% block sidebar %}
         {% endblock %}
     </div>
 
