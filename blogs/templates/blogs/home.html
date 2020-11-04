@@ -5,5 +5,13 @@
 {% endif%}
 {% endblock %}
 {% block content %}
-
+{% if blog_list %}
+{% for blog in blog_list%}
+<h2>{{blog.title}}</h2>
+<h3>Author: {{blog.user.username}}</h3>
+<span>{{blog.body}}</span>
+<p>{{blog.created_date}}</p>
+<a href="{% url 'delete_blog' blog.id %}">Delete</a>
+{% endfor %}
+{% endif %}
 {% endblock %}

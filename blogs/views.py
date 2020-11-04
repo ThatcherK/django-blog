@@ -8,9 +8,11 @@ from .models import Blog
 
 def index(request):
     username = None
+    blog_list = None
     if request.user.is_authenticated:
         username = request.user.username
-    return render(request,'blogs/home.html',{'username': username})
+        blog_list = Blog.objects.all()
+    return render(request,'blogs/home.html',{'username': username, 'blog_list':blog_list})
 
 def blog_page(request):
     form =BlogForm()
@@ -20,18 +22,27 @@ def create_blog(request):
     if request.method == 'POST':
         form = BlogForm(request.POST)
         if form.is_valid():
-            title = form.cleaned_data.get('title')
-            body = form.cleaned_data.get('body')
-            picture = form.cleaned_data.get('picture')
-            if picture is not None:
-                blog = Blog(title=title, body=body, picture=picture)
-                blog.save()
+            if request.user.is_authenticated:
+                title = form.cleaned_data.get('title')
+                body = form.cleaned_data.get('body')
+                picture = form.cleaned_data.get('picture')
+                if picture is not None:
+                    blog = Blog(title=title, body=body, picture=picture, user=request.user)
+                    blog.save()
+                else:
+                    blog = Blog(title=title, body=body, user=request.user)
+                    blog.save() 
+                return redirect(reverse('index'))
             else:
-                blog = Blog(title=title, body=body)
-                blog.save() 
-            return redirect(reverse('index'))
+                return HttpResponse('Please log in')
         else:
             form = BlogForm()
+
+def delete_blog(request,blog_id):
+    blog = Blog.objects.get(pk=blog_id)
+    if blog is not None:
+        blog.delete()
+        return redirect(reverse('index'))
 def signup_form(request):
     form = SignupForm()
     return render(request, 'blogs/signup.html', context={'form': form})
