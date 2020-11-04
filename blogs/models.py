@@ -16,6 +16,7 @@ class Blog(models.Model):
         return self.name
 
 class Comment(models.Model):
+    author = models.OneToOneField(User,on_delete=models.CASCADE, null=True)
     blog = models.ForeignKey(Blog,on_delete=models.CASCADE)
     comment = models.CharField(max_length=200)
     created_date = models.DateTimeField(default=timezone.now)
