@@ -17,3 +17,6 @@ class EditBlogForm(forms.Form):
     title = forms.CharField(label='Title', max_length=100)
     body = forms.CharField(widget=forms.Textarea)
     picture = forms.ImageField(required=False)
+
+class CommentForm(forms.Form):
+    comment = forms.CharField(label='Comment', max_length=100)

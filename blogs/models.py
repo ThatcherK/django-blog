@@ -9,14 +9,14 @@ class Blog(models.Model):
     title = models.CharField(max_length=200)
     body = models.CharField(max_length=400)
     picture = models.ImageField(blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_date = models.DateTimeField( default=timezone.now)
 
     def __str__(self):
         return self.name
 
 class Comment(models.Model):
-    author = models.OneToOneField(User,on_delete=models.CASCADE, null=True)
+    author = models.OneToOneField(User,on_delete=models.CASCADE)
     blog = models.ForeignKey(Blog,on_delete=models.CASCADE)
     comment = models.CharField(max_length=200)
     created_date = models.DateTimeField(default=timezone.now)

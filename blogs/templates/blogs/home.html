@@ -1,24 +1,49 @@
 {% extends "blogs/base.html" %}
 {% block sidebar %}
 {% if username%}
- <p>Welcome {{username}}</p>
+<p style="text-align: center;">Welcome {{username}}</p>
 {% endif%}
 {% endblock %}
 {% block content %}
 {% if blog_list %}
 {% for blog in blog_list%}
-<h2>{{blog.title}}</h2>
-<h3>Author: {{blog.user.username}}</h3>
-<span>{{blog.body}}</span>
-<p>{{blog.created_date}}</p>
-{% if blog.user.username == username %}
-<a href="{% url 'delete_blog' blog.id %}" id="deleteLink">Delete</a>
-<a href="{% url 'edit_blog_page' blog.id %}" id="deleteLink">Edit</a>
-{% else %}
-<a href="" id="deleteLink">Delete</a>
-<a href="" id="deleteLink">Edit</a>
-{% endif%}
+<div class="blog" style="display: flex;flex-direction: column;background-color: whitesmoke;margin: 10px;">
+    <h2 style="padding: 10px;text-align: center;">{{blog.title}}</h2>
+    <h3 style="padding-left: 10px;">Author: {{blog.user.username}}</h3>
+    <p style="padding-left: 10px;margin-top: 0;">{{blog.created_date}}</p>
+    <span style="text-align: justify;padding: 10px;font-size: 18px;">{{blog.body}}</span>
+    
+    {% if blog.user.username == username %}
+    <div style="display: flex; padding-left: 10px;font-size: 20px;">
+        <a href="{% url 'delete_blog' blog.id %}" id="deleteLink" style="text-decoration: none; margin-right: 10px;color: rgb(173, 18, 18);">Delete</a>
+        <a href="{% url 'edit_blog_page' blog.id %}" id="deleteLink" style="text-decoration: none;color: green;">Edit</a>
+    </div>
+
+    {% else %}
+    <div style="display: flex;padding-left: 10px;font-size: 20px;">
+        <a href="" id="deleteLink" style="text-decoration: none; margin-right: 10px;color: rgb(85, 81, 81);">Delete</a>
+        <a href="" id="deleteLink" style="text-decoration: none;color:rgb(85, 81, 81) ;">Edit</a>
+    </div>
+
+    {% endif%}
+    {% if username is not None%}
+    <div id="commentform" style="padding: 10px;font-size: 18px;">
+        <form action="{% url 'comment' blog.id %}" method="post">
+            {% csrf_token %}
+            {{comment_form}}
+            <input type="submit" value="Submit">
+        </form>
+
+    </div>
+    {% endif %}
+    <a href="{% url 'comments_page' blog.id %}" id="deleteLink" style="text-decoration: none;padding: 10px;">View Comments</a>
+</div>
+
 {% endfor %}
 {% endif %}
-
+<script>
+    function showCommentBox() {
+        document.getElementById('commentform').style.display = 'block'
+    }
+</script>
 {% endblock %}

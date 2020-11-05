@@ -1,3 +1,12 @@
+.pageContainer{
+    display: flex;
+}
+#sidebar{
+    width: 20%;
+}
+.blog span{
+    text-align: justify;
+}
 .navbarContainer{
     display: flex;
     justify-content: space-between;
