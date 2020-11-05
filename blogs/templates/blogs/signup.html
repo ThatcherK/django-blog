@@ -1,12 +1,12 @@
 {% extends "blogs/base.html" %}
-
+{% load static %}
 {% block title %}My amazing blog{% endblock %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'blogs/index.css' %}">
 {% block content %}
-<form action="{% url 'user_signup' %}" method="post">
+<form class="signUp" action="{% url 'user_signup' %}" method="post" style="display: flex;flex-direction: column;width: 50%;">
     {% csrf_token %}
     {{form}}
-    <input  type="submit" value="Sign Up">
+    <input  type="submit" value="Sign Up" style="color: white;background-color: teal;border: none;border-radius: 4px;padding: 10px;font-size: 18px;margin-top: 10px;">
 </form>
 
 {% endblock %}
