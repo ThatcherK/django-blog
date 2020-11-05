@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import SignupForm, LoginForm, BlogForm
+from .forms import SignupForm, LoginForm, BlogForm, EditBlogForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
@@ -43,6 +43,39 @@ def delete_blog(request,blog_id):
     if blog is not None:
         blog.delete()
         return redirect(reverse('index'))
+
+def edit_blog_page(request,blog_id):
+    blog = Blog.objects.get(pk=blog_id)
+    
+    if blog is not None:
+        intial_data = {
+            'title': blog.title,
+            'body':blog.body,
+            'picture': blog.picture
+        }
+        form = EditBlogForm(initial=intial_data)
+        return render(request,'blogs/edit_blog.html',{'form': form, "blog": blog})
+
+def edit_blog(request, blog_id):
+    if request.method == 'POST':
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            if request.user.is_authenticated:
+                title = form.cleaned_data.get('title')
+                body = form.cleaned_data.get('body')
+                picture = form.cleaned_data.get('picture')
+                
+                blog = Blog.objects.get(pk=blog_id)
+                if blog is not None:
+                    blog.title = title
+                    blog.body = body
+                    blog.picture = picture
+                    blog.save()
+                return redirect(reverse('index'))
+            else:
+                return HttpResponse('Please log in')
+        else:
+            form = BlogForm()
 def signup_form(request):
     form = SignupForm()
     return render(request, 'blogs/signup.html', context={'form': form})
