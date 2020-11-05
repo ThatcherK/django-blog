@@ -17,13 +17,16 @@
             <a href="/user_logout/">Log Out</a>
         </div>
     </div>
-    <div id="sidebar">
-        {% block sidebar %}
-        {% endblock %}
+    <div class="pageContainer" style="display: flex;">
+        <div id="sidebar" style="width: 20%;background-color: #dfd0d0;">
+            {% block sidebar %}
+            {% endblock %}
+        </div>
+    
+        <div id="content" style="padding: 30px;width: 70%;justify-content: center;">
+            {% block content %}{% endblock %}
+        </div>
     </div>
-
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
+    
 </body>
 </html>

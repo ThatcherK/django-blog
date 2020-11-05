@@ -1,3 +1,17 @@
+.pageContainer{
+    display: flex;
+}
+#sidebar{
+    width: 20%;
+}
+.blog span{
+    text-align: justify;
+}
+.blogForm input textarea{
+    width: 80%;
+    box-sizing: border-box;
+}
+
 .navbarContainer{
     display: flex;
     justify-content: space-between;
@@ -29,4 +43,25 @@
     margin: 10px;
     color: white;
     width: 80px;
+}
+.signUp input{
+    height: 40px;
+}
+.login{
+    display: flex;
+    flex-direction: column;
+}
+.login input{
+    height: 40px;
+    width: 50%;
+    box-sizing: border-box;
+}
+#loginBtn{
+    color: white;
+    background-color: teal;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 18px;
+    margin-top: 10px;
 }

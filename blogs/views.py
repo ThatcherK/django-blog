@@ -1,18 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import SignupForm, LoginForm, BlogForm, EditBlogForm
+from .forms import SignupForm, LoginForm, BlogForm, EditBlogForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from .models import Blog
+from .models import Blog, Comment
 
 def index(request):
     username = None
     blog_list = None
+    comment_form = CommentForm()
     if request.user:
         username = request.user.username
         blog_list = Blog.objects.all()
-    return render(request,'blogs/home.html',{'username': username, 'blog_list':blog_list})
+    return render(request,'blogs/home.html',{'username': username, 'blog_list':blog_list, 'comment_form': comment_form})
 
 def blog_page(request):
     form =BlogForm()
@@ -76,6 +77,25 @@ def edit_blog(request, blog_id):
                 return HttpResponse('Please log in')
         else:
             form = BlogForm()
+
+def comment(request, blog_id):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.cleaned_data.get('comment')
+            blog = Blog.objects.get(pk=blog_id)
+            author = request.user
+            new_comment = Comment(author=author, blog=blog, comment=comment)
+            new_comment.save()
+            return redirect(reverse('index'))
+        else:
+            form = CommentForm()
+
+def comments_page(request,blog_id):
+    blog = Blog.objects.get(pk=blog_id)
+    comments = Comment.objects.filter(blog=blog)
+    return render(request, 'blogs/comments.html',{'comments': comments})
+
 def signup_form(request):
     form = SignupForm()
     return render(request, 'blogs/signup.html', context={'form': form})
