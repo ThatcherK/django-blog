@@ -11,7 +11,12 @@
 <h3>Author: {{blog.user.username}}</h3>
 <span>{{blog.body}}</span>
 <p>{{blog.created_date}}</p>
-<a href="{% url 'delete_blog' blog.id %}">Delete</a>
+{% if blog.user.username == username %}
+<a href="{% url 'delete_blog' blog.id %}" id="deleteLink">Delete</a>
+{% else %}
+<a href="" id="deleteLink">Delete</a>
+{% endif%}
 {% endfor %}
 {% endif %}
+
 {% endblock %}

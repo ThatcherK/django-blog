@@ -9,9 +9,8 @@ from .models import Blog
 def index(request):
     username = None
     blog_list = None
-    if request.user.is_authenticated:
-        username = request.user.username
-        blog_list = Blog.objects.all()
+    username = request.user.username
+    blog_list = Blog.objects.all()
     return render(request,'blogs/home.html',{'username': username, 'blog_list':blog_list})
 
 def blog_page(request):
@@ -84,5 +83,5 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return render(request,'blogs/home.html',context=None)
+    return redirect(index)
 
