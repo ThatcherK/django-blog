@@ -7,6 +7,10 @@
 .blog span{
     text-align: justify;
 }
+.blog img{
+    height: 400px;
+    object-fit: cover;
+}
 .blogForm input textarea{
     width: 80%;
     box-sizing: border-box;

@@ -21,7 +21,7 @@ def blog_page(request):
 
 def create_blog(request):
     if request.method == 'POST':
-        form = BlogForm(request.POST)
+        form = BlogForm(request.POST,request.FILES)
         if form.is_valid():
             if request.user.is_authenticated:
                 title = form.cleaned_data.get('title')
