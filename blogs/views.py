@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .forms import SignupForm, LoginForm, BlogForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -9,8 +9,9 @@ from .models import Blog
 def index(request):
     username = None
     blog_list = None
-    username = request.user.username
-    blog_list = Blog.objects.all()
+    if request.user:
+        username = request.user.username
+        blog_list = Blog.objects.all()
     return render(request,'blogs/home.html',{'username': username, 'blog_list':blog_list})
 
 def blog_page(request):
@@ -83,5 +84,5 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect(index)
+    return redirect(reverse('index'))
 
