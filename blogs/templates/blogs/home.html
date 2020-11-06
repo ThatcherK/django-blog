@@ -1,6 +1,6 @@
 {% extends "blogs/base.html" %}
 {% block sidebar %}
-{% if user%}
+{% if user.username%}
 <p style="text-align: center;">Welcome {{user.username}}</p>
 {% if user.profile.profile_picture %}
 <img src="{{ user.profile.profile_picture.url }}" style="width: 100px;height: 100px;object-fit: cover;">
@@ -21,7 +21,7 @@
     <p style="padding-left: 10px;margin-top: 0;">{{blog.created_date}}</p>
     <span style="text-align: justify;padding: 10px;font-size: 18px;">{{blog.body}}</span>
 
-    {% if blog.user.username == username %}
+    {% if blog.user.username == user.username %}
     <div style="display: flex; padding-left: 10px;font-size: 20px;">
         <a href="{% url 'delete_blog' blog.id %}" id="deleteLink"
             style="text-decoration: none; margin-right: 10px;color: rgb(173, 18, 18);">Delete</a>
