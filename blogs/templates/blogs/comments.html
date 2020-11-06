@@ -1,0 +1,10 @@
+{% extends "blogs/base.html" %}
+{% block content %}
+{% if comments %}
+{% for comment in comments%}
+<h2>{{comment.author.username}}</h2>
+<span>{{comment.comment}}</span>
+<p>{{comment.created_date}}</p>
+{% endfor%}
+{% endif%}
+{% endblock %}
