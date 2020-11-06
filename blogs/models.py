@@ -10,10 +10,14 @@ class Blog(models.Model):
     body = models.CharField(max_length=400)
     picture = models.ImageField(blank=True, null=True, upload_to="images/")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, related_name='blog_posts')
     created_date = models.DateTimeField( default=timezone.now)
 
     def __str__(self):
         return self.name
+
+    def total_likes(self):
+        return self.likes.count()
 
 class Comment(models.Model):
     author = models.OneToOneField(User,on_delete=models.CASCADE)

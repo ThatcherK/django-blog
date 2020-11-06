@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .forms import SignupForm, LoginForm, BlogForm, EditBlogForm, CommentForm, ProfileForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from .models import Blog, Comment
 
 def index(request):
@@ -115,6 +115,11 @@ def create_profile(request):
                 return HttpResponse('Please log in')
         else:
             form = ProfileForm()
+
+def like_blog(request, blog_id):
+    blog = get_object_or_404(Blog, id=request.POST.get('blog_id'))
+    blog.likes.add(request.user)
+    return HttpResponseRedirect(reverse(''))
 def signup_form(request):
     form = SignupForm()
     return render(request, 'blogs/signup.html', context={'form': form})
