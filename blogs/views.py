@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import SignupForm, LoginForm, BlogForm, EditBlogForm, CommentForm
+from .forms import SignupForm, LoginForm, BlogForm, EditBlogForm, CommentForm, ProfileForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
@@ -11,9 +11,9 @@ def index(request):
     blog_list = None
     comment_form = CommentForm()
     if request.user:
-        username = request.user.username
+        user = request.user
         blog_list = Blog.objects.all()
-    return render(request,'blogs/home.html',{'username': username, 'blog_list':blog_list, 'comment_form': comment_form})
+    return render(request,'blogs/home.html',{'user': user, 'blog_list':blog_list, 'comment_form': comment_form})
 
 def blog_page(request):
     form =BlogForm()
@@ -96,6 +96,25 @@ def comments_page(request,blog_id):
     comments = Comment.objects.filter(blog=blog)
     return render(request, 'blogs/comments.html',{'comments': comments})
 
+def create_profile_page(request):
+    form = ProfileForm()
+    return render(request, 'blogs/create_profile.html', {"form": form})
+
+def create_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            if request.user.is_authenticated:
+                bio = form.cleaned_data.get('bio')
+                profile_picture = form.cleaned_data.get('profile_picture')
+                request.user.profile.bio = bio
+                request.user.profile.profile_picture = profile_picture
+                request.user.profile.save()
+                return redirect(reverse('index'))
+            else:
+                return HttpResponse('Please log in')
+        else:
+            form = ProfileForm()
 def signup_form(request):
     form = SignupForm()
     return render(request, 'blogs/signup.html', context={'form': form})

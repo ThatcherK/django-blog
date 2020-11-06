@@ -14,6 +14,8 @@ urlpatterns = [
     path('<int:blog_id>/blog/edit_page/', views.edit_blog_page, name="edit_blog_page"),
     path('<int:blog_id>/blog/edit/', views.edit_blog, name="edit_blog"),
     path('<int:blog_id>/blog/comment/', views.comment, name="comment"),
-    path('<int:blog_id>/blog/comments/', views.comments_page, name="comments_page")
+    path('<int:blog_id>/blog/comments/', views.comments_page, name="comments_page"),
+    path('profile/page', views.create_profile_page, name="create_profile_page"),
+    path('profile/create', views.create_profile, name="create_profile")
      
 ]

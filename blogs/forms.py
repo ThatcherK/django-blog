@@ -20,3 +20,7 @@ class EditBlogForm(forms.Form):
 
 class CommentForm(forms.Form):
     comment = forms.CharField(label='Comment', max_length=100)
+
+class ProfileForm(forms.Form):
+    bio = forms.CharField(label='Bio', max_length=100)
+    profile_picture = forms.ImageField(required=False)

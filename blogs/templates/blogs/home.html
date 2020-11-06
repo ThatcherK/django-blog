@@ -1,7 +1,12 @@
 {% extends "blogs/base.html" %}
 {% block sidebar %}
-{% if username%}
-<p style="text-align: center;">Welcome {{username}}</p>
+{% if user%}
+<p style="text-align: center;">Welcome {{user.username}}</p>
+{% if user.profile.profile_picture %}
+<img src="{{ user.profile.profile_picture.url }}" style="width: 100px;height: 100px;object-fit: cover;">
+{% endif %}
+<p>{{user.profile.bio}}</p>
+<a href="{% url 'create_profile_page' %}">Edit Profile</a>
 {% endif%}
 {% endblock %}
 {% block content %}
@@ -15,11 +20,13 @@
     <h3 style="padding-left: 10px;">Author: {{blog.user.username}}</h3>
     <p style="padding-left: 10px;margin-top: 0;">{{blog.created_date}}</p>
     <span style="text-align: justify;padding: 10px;font-size: 18px;">{{blog.body}}</span>
-    
+
     {% if blog.user.username == username %}
     <div style="display: flex; padding-left: 10px;font-size: 20px;">
-        <a href="{% url 'delete_blog' blog.id %}" id="deleteLink" style="text-decoration: none; margin-right: 10px;color: rgb(173, 18, 18);">Delete</a>
-        <a href="{% url 'edit_blog_page' blog.id %}" id="deleteLink" style="text-decoration: none;color: green;">Edit</a>
+        <a href="{% url 'delete_blog' blog.id %}" id="deleteLink"
+            style="text-decoration: none; margin-right: 10px;color: rgb(173, 18, 18);">Delete</a>
+        <a href="{% url 'edit_blog_page' blog.id %}" id="deleteLink"
+            style="text-decoration: none;color: green;">Edit</a>
     </div>
 
     {% else %}
@@ -34,12 +41,14 @@
         <form action="{% url 'comment' blog.id %}" method="post">
             {% csrf_token %}
             {{comment_form}}
-            <input type="submit" value="Submit" style="border: none;padding: 5px;background-color: teal;color: white;border-radius: 4px;">
+            <input type="submit" value="Submit"
+                style="border: none;padding: 5px;background-color: teal;color: white;border-radius: 4px;">
         </form>
 
     </div>
     {% endif %}
-    <a href="{% url 'comments_page' blog.id %}" id="deleteLink" style="text-decoration: none;padding: 10px;">View Comments</a>
+    <a href="{% url 'comments_page' blog.id %}" id="deleteLink" style="text-decoration: none;padding: 10px;">View
+        Comments</a>
 </div>
 
 {% endfor %}

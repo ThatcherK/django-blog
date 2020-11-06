@@ -26,7 +26,7 @@ class Comment(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE, primary_key=True)
-    profile_picture = models.ImageField(blank=True)
+    profile_picture = models.ImageField(blank=True, null=True, upload_to="images/")
     bio = models.CharField(blank=True, max_length=200)
 
 @receiver(post_save, sender=User, dispatch_uid='save_new_user_profile')
