@@ -12,7 +12,7 @@ def index(request):
     comment_form = CommentForm()
     if request.user:
         user = request.user
-        blog_list = Blog.objects.all()
+        blog_list = Blog.objects.order_by('-created_date')
     return render(request,'blogs/home.html',{'user': user, 'blog_list':blog_list, 'comment_form': comment_form})
 
 def blog_page(request):
