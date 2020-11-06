@@ -59,7 +59,7 @@ def edit_blog_page(request,blog_id):
 
 def edit_blog(request, blog_id):
     if request.method == 'POST':
-        form = BlogForm(request.POST)
+        form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
             if request.user.is_authenticated:
                 title = form.cleaned_data.get('title')

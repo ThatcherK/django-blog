@@ -15,7 +15,9 @@
     width: 80%;
     box-sizing: border-box;
 }
-
+.edit-form{
+    display: flex;
+}
 .navbarContainer{
     display: flex;
     justify-content: space-between;
