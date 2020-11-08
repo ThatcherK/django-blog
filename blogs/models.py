@@ -20,8 +20,8 @@ class Blog(models.Model):
         return self.likes.count()
 
 class Comment(models.Model):
-    author = models.OneToOneField(User,on_delete=models.CASCADE)
-    blog = models.ForeignKey(Blog,on_delete=models.CASCADE)
+    author = models.ManyToManyField(User)
+    blog = models.ManyToManyField(Blog)
     comment = models.CharField(max_length=200)
     created_date = models.DateTimeField(default=timezone.now)
 

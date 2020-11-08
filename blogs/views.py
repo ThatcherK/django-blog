@@ -89,10 +89,14 @@ def comment(request, blog_id):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.cleaned_data.get('comment')
-            blog = Blog.objects.get(pk=blog_id)
-            author = request.user
-            new_comment = Comment(author=author, blog=blog, comment=comment)
+            new_comment = Comment(comment=comment)
             new_comment.save()
+            blog = get_object_or_404(Blog, pk=blog_id)
+            # blog = Blog.objects.get(pk=blog_id)
+            new_comment.author.add(request.user)
+            new_comment.blog.add(blog)
+            
+            author = request.user
             return redirect(reverse('index'))
         else:
             form = CommentForm()
