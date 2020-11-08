@@ -14,7 +14,7 @@ class Blog(models.Model):
     created_date = models.DateTimeField( default=timezone.now)
 
     def __str__(self):
-        return self.name
+        return self.title
 
     def total_likes(self):
         return self.likes.count()

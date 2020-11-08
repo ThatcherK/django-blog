@@ -13,7 +13,13 @@ def index(request):
     if request.user:
         user = request.user
         blog_list = Blog.objects.order_by('-created_date')
-    return render(request,'blogs/home.html',{'user': user, 'blog_list':blog_list, 'comment_form': comment_form})
+        context = {
+            'user': user,
+            'blog_list':blog_list, 
+            'comment_form': comment_form,
+            'Blog': Blog
+            }
+    return render(request,'blogs/home.html',context)
 
 def blog_page(request):
     form =BlogForm()
@@ -119,7 +125,8 @@ def create_profile(request):
 def like_blog(request, blog_id):
     blog = get_object_or_404(Blog, id=request.POST.get('blog_id'))
     blog.likes.add(request.user)
-    return HttpResponseRedirect(reverse(''))
+    return HttpResponseRedirect(reverse('index'))
+    
 def signup_form(request):
     form = SignupForm()
     return render(request, 'blogs/signup.html', context={'form': form})
