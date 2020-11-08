@@ -21,7 +21,7 @@
     <h3 style="padding-left: 10px;">Author: {{blog.user.username}}</h3>
     <p style="padding-left: 10px;margin-top: 0;">{{blog.created_date}}</p>
     <span style="text-align: justify;padding: 10px;font-size: 18px;">{{blog.body}}</span>
-
+    <p>{{blog.total_likes}} likes</p>
     {% if blog.user.username == user.username %}
     <div style="display: flex; padding-left: 10px;font-size: 20px;">
         <a href="{% url 'delete_blog' blog.id %}" id="deleteLink"
@@ -34,21 +34,24 @@
     <div style="display: flex;padding-left: 10px;font-size: 20px;">
         <a href="" id="deleteLink" style="text-decoration: none; margin-right: 10px;color: rgb(85, 81, 81);">Delete</a>
         <a href="" id="deleteLink" style="text-decoration: none;color:rgb(85, 81, 81) ;">Edit</a>
-        <!-- <a><i class="fa fa-thumbs-up" aria-hidden="true"></i> -->
-    </div>
-
-    {% endif%}
-    {% if username is not None%}
-    <div id="commentform" style="padding: 10px;font-size: 18px;">
-        <form action="{% url 'comment' blog.id %}" method="post">
+        <form action="{% url 'like_blog' blog.id%} " method="POST">
             {% csrf_token %}
-            {{comment_form}}
-            <input type="submit" value="Submit"
-                style="border: none;padding: 5px;background-color: teal;color: white;border-radius: 4px;">
+            <button type="submit" style="border: none;padding: 5px;color: teal;border-radius: 4px;" name="blog_id" value="{{blog.id}}" ><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            </button>
         </form>
-
+        <div id="commentform" style="padding: 10px;font-size: 18px;">
+            <form action="{% url 'comment' blog.id %}" method="post">
+                {% csrf_token %}
+                {{comment_form}}
+                <input type="submit" value="Submit"
+                    style="border: none;padding: 5px;background-color: teal;color: white;border-radius: 4px;">
+            </form>
+    
+        </div>
+        
     </div>
-    {% endif %}
+    {% endif%}
+    
     <a href="{% url 'comments_page' blog.id %}" id="deleteLink" style="text-decoration: none;padding: 10px;">View
         Comments</a>
 </div>
