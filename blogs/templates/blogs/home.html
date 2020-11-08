@@ -21,7 +21,7 @@
     <h3 style="padding-left: 10px;">Author: {{blog.user.username}}</h3>
     <p style="padding-left: 10px;margin-top: 0;">{{blog.created_date}}</p>
     <span style="text-align: justify;padding: 10px;font-size: 18px;">{{blog.body}}</span>
-    <p>{{blog.total_likes}} likes</p>
+    <p>{{blog.total_likes}} likes</p><br/>
     {% if blog.user.username == user.username %}
     <div style="display: flex; padding-left: 10px;font-size: 20px;">
         <a href="{% url 'delete_blog' blog.id %}" id="deleteLink"
