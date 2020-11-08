@@ -38,25 +38,19 @@
             <button type="submit" style="border: none;padding: 5px;color: teal;border-radius: 4px;" name="blog_id" value="{{blog.id}}" ><i class="fa fa-thumbs-up" aria-hidden="true"></i>
             </button>
         </form>
+        <div id="commentform" style="padding: 10px;font-size: 18px;">
+            <form action="{% url 'comment' blog.id %}" method="post">
+                {% csrf_token %}
+                {{comment_form}}
+                <input type="submit" value="Submit"
+                    style="border: none;padding: 5px;background-color: teal;color: white;border-radius: 4px;">
+            </form>
+    
+        </div>
         
     </div>
     {% endif%}
-    {% if username is not None%}
-    <!-- <form action="{% url 'like_blog' blog.id%} " method="POST">
-        {% csrf_token %}
-        <button type="submit" style="border: none;padding: 5px;background-color: teal;color: white;border-radius: 4px;" name="blog_id" value="{{blog.id}}" ><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-        </button>
-    </form> -->
-    <div id="commentform" style="padding: 10px;font-size: 18px;">
-        <form action="{% url 'comment' blog.id %}" method="post">
-            {% csrf_token %}
-            {{comment_form}}
-            <input type="submit" value="Submit"
-                style="border: none;padding: 5px;background-color: teal;color: white;border-radius: 4px;">
-        </form>
-
-    </div>
-    {% endif %}
+    
     <a href="{% url 'comments_page' blog.id %}" id="deleteLink" style="text-decoration: none;padding: 10px;">View
         Comments</a>
 </div>
