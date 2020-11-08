@@ -1,0 +1,25 @@
+{% extends "blogs/base.html" %}
+{% block content %}
+{% if blogs %}
+{% for blog in blogs%}
+<div class="blog" style="display: flex;flex-direction: column;background-color: whitesmoke;margin: 10px;">
+    <h2 style="padding: 10px;text-align: center;">{{blog.title}}</h2>
+    {% if blog.picture %}
+    <img src="{{blog.picture.url}}" style=" height: 400px; object-fit: cover;">
+    {% endif %}
+
+    <h3 style="padding-left: 10px;">Author: {{blog.user.username}}</h3>
+    <p style="padding-left: 10px;margin-top: 0;">{{blog.created_date}}</p>
+    <span style="text-align: justify;padding: 10px;font-size: 18px;">{{blog.body}}</span>
+    <p>{{blog.total_likes}} likes</p><br />
+    {% if blog.user.username == user.username %}
+    <div style="display: flex; padding-left: 10px;font-size: 20px;">
+        <a href="{% url 'delete_blog' blog.id %}" id="deleteLink"
+            style="text-decoration: none; margin-right: 10px;color: rgb(173, 18, 18);">Delete</a>
+        <a href="{% url 'edit_blog_page' blog.id %}" id="deleteLink"
+            style="text-decoration: none;color: green;">Edit</a>
+    </div>
+    {% endif%}
+    {% endfor %}
+    {% endif%}
+    {% endblock %}

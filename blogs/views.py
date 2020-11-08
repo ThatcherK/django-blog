@@ -134,7 +134,14 @@ def like_blog(request, blog_id):
 def signup_form(request):
     form = SignupForm()
     return render(request, 'blogs/signup.html', context={'form': form})
-  
+
+def personal_blogs(request, user_id):
+    user = get_object_or_404(User,pk=user_id)
+    blogs =   Blog.objects.filter(user=user)
+    context={
+        'blogs': blogs
+    }
+    return render(request, 'blogs/personal_blogs.html', context)
 def user_signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
