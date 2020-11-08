@@ -32,8 +32,6 @@
 
     {% elif blog.user is not None %}
     <div style="display: flex;padding-left: 10px;font-size: 20px;">
-        <a href="" id="deleteLink" style="text-decoration: none; margin-right: 10px;color: rgb(85, 81, 81);">Delete</a>
-        <a href="" id="deleteLink" style="text-decoration: none;color:rgb(85, 81, 81) ;">Edit</a>
         <form action="{% url 'like_blog' blog.id%} " method="POST">
             {% csrf_token %}
             <button type="submit" style="border: none;padding: 5px;color: teal;border-radius: 4px;" name="blog_id" value="{{blog.id}}" ><i class="fa fa-thumbs-up" aria-hidden="true"></i>
