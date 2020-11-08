@@ -13,10 +13,11 @@
 {% if blog_list %}
 {% for blog in blog_list%}
 <div class="blog" style="display: flex;flex-direction: column;background-color: whitesmoke;margin: 10px;">
+    <h2 style="padding: 10px;text-align: center;">{{blog.title}}</h2>
     {% if blog.picture %}
     <img src="{{blog.picture.url}}" style=" height: 400px; object-fit: cover;">
     {% endif %}
-    <h2 style="padding: 10px;text-align: center;">{{blog.title}}</h2>
+   
     <h3 style="padding-left: 10px;">Author: {{blog.user.username}}</h3>
     <p style="padding-left: 10px;margin-top: 0;">{{blog.created_date}}</p>
     <span style="text-align: justify;padding: 10px;font-size: 18px;">{{blog.body}}</span>
