@@ -88,16 +88,16 @@ def comment(request, blog_id):
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            comment = form.cleaned_data.get('comment')
-            new_comment = Comment(comment=comment)
-            new_comment.save()
-            blog = get_object_or_404(Blog, pk=blog_id)
-            # blog = Blog.objects.get(pk=blog_id)
-            new_comment.author.add(request.user)
-            new_comment.blog.add(blog)
-            
-            author = request.user
-            return redirect(reverse('index'))
+            if request.user.is_authenticated:
+                comment = form.cleaned_data.get('comment')
+                new_comment = Comment(comment=comment)
+                new_comment.save()
+                blog = get_object_or_404(Blog, pk=blog_id)
+                new_comment.author.add(request.user)
+                new_comment.blog.add(blog)
+                return redirect(reverse('index'))
+            else:
+                return HttpResponse("You must be logged in")
         else:
             form = CommentForm()
 
@@ -127,9 +127,12 @@ def create_profile(request):
             form = ProfileForm()
 
 def like_blog(request, blog_id):
-    blog = get_object_or_404(Blog, id=request.POST.get('blog_id'))
-    blog.likes.add(request.user)
-    return HttpResponseRedirect(reverse('index'))
+    if request.user.is_authenticated:
+        blog = get_object_or_404(Blog, id=request.POST.get('blog_id'))
+        blog.likes.add(request.user)
+        return HttpResponseRedirect(reverse('index'))
+    else:
+        return HttpResponseRedirect(reverse('index'))
     
 def signup_form(request):
     form = SignupForm()
@@ -180,4 +183,5 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect(reverse('index'))
+   
 

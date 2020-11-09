@@ -2,11 +2,12 @@
 {% block sidebar %}
 {% if user.username%}
 <p style="text-align: center;">Welcome {{user.username}}</p>
-<a href="{% url 'personal_blogs' user.id%}">blogs</a>
+
 {% if user.profile.profile_picture %}
 <img src="{{ user.profile.profile_picture.url }}" style="width: 100px;height: 100px;object-fit: cover;">
 {% endif %}
 <p>{{user.profile.bio}}</p>
+<a href="{% url 'personal_blogs' user.id%}">blogs</a><br>
 <a href="{% url 'create_profile_page' %}">Edit Profile</a>
 {% endif%}
 {% endblock %}
@@ -22,7 +23,7 @@
     <h3 style="padding-left: 10px;">Author: {{blog.user.username}}</h3>
     <p style="padding-left: 10px;margin-top: 0;">{{blog.created_date}}</p>
     <span style="text-align: justify;padding: 10px;font-size: 18px;">{{blog.body}}</span>
-    <p>{{blog.total_likes}} likes</p><br/>
+    <p style="padding-left: 10px;">{{blog.total_likes}} likes</p><br/>
     {% if blog.user.username == user.username %}
     <div style="display: flex; padding-left: 10px;font-size: 20px;">
         <a href="{% url 'delete_blog' blog.id %}" id="deleteLink"
@@ -30,12 +31,12 @@
         <a href="{% url 'edit_blog_page' blog.id %}" id="deleteLink"
             style="text-decoration: none;color: green;">Edit</a>
     </div>
-
-    {% elif blog.user is not None %}
-    <div style="display: flex;padding-left: 10px;font-size: 20px;">
+    {% endif%}
+    {% if blog.user.username is not None %}
+    <div style="display: flex;padding-left: 10px;font-size: 20px;flex-direction: column;">
         <form action="{% url 'like_blog' blog.id%} " method="POST">
             {% csrf_token %}
-            <button type="submit" style="border: none;padding: 5px;color: teal;border-radius: 4px;" name="blog_id" value="{{blog.id}}" ><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            <button type="submit" style="border: none;padding: 5px;color: teal;background: none;" name="blog_id" value="{{blog.id}}" ><i class="fa fa-thumbs-up fa-2x" aria-hidden="true"></i>
             </button>
         </form>
         <div id="commentform" style="padding: 10px;font-size: 18px;">

@@ -41,6 +41,9 @@
     color: white;
     font-size: 20px;
 }
+.navbar a:active{
+    background-color: black;
+}
 .navbar button{
     background-color: rgba(18, 18, 240, 0.596);
     border-radius: 6px;
